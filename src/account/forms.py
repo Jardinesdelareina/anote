@@ -1,34 +1,6 @@
 from django import forms
-from django.forms import ModelForm
 from .models import AnoteUser
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-
-
-class AccountForm(ModelForm):
-    class Meta:
-        model = AnoteUser
-        fields = ['email', 'phone', 'gender', 'avatar', 'birthday']
-
-        widgets = {
-            'username': forms.TextInput(attrs={
-                'class': 'input',
-                'placeholder': 'Имя пользователя'
-            }),
-            'phone': forms.NumberInput(attrs={
-                'class': 'input',
-                'placeholder': 'Номер телефона'
-            }),
-            'gender': forms.Select(attrs={
-                'class': 'select'
-            }),
-            'avatar': forms.FileInput(attrs={
-                'class': 'file',
-                'placeholder': 'Загрузить'
-            }),
-            'birthday': forms.DateInput(attrs={
-                'class': 'date'
-            }),
-        }
 
 
 class AnoteUserRegisterForm(UserCreationForm):

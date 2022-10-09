@@ -3,9 +3,6 @@ from .forms import AnoteUserRegisterForm, AnoteUserAuthForm
 from django.contrib.auth import login, logout
 from django.contrib import messages
 
-def index(request):
-    return render(request, 'account/index.html')
-
 def register(request):
     if request.method == 'POST':
         form = AnoteUserRegisterForm(request.POST)
