@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Профиль :: {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="profile">
+    {% if request.user.is_authenticated %}
+        <div class="profile__avatar">
+            {% if profile_view.avatar %}
+                <img src="{{ profile_view.avatar.url }}" alt="" width="200">
+            {% endif %}
+            <div class="file">{{ profile_view.avatar }}</div>
+        </div>
+        <div class="profile__info">
+            <div class="input">{{ profile_view.username }}</div>
+            <div class="input">{{ profile_view.phone }}</div>
+            <div class="select">{{ profile_view.gender }}</div>
+            <div class="date">{{ profile_view.birthday|date:"d-m-Y" }}</div>
+        </div>
+    {% else %}
+        <div>Вы не авторизованы</div>
+        <div><a href="{% url 'register' %}">Регистрация</a></div>
+        <div><a href="{% url 'login' %}">Авторизация</a></div>
+    {% endif %}
+</div>
+{% endblock %}
