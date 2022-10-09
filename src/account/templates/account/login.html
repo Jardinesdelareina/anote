@@ -5,8 +5,9 @@
 {% block content %}
 <form method="post">
     {% csrf_token %}
-    <div class="form__title">Авторизация</div>
-    <div class="form__auth">{{ form.as_p }}</div>
-    <button class="button" type="submit">Войти</button>
+    <div>Авторизация</div>
+    <div>{{ form.as_p }}</div>
+    <button type="submit">Войти</button>
 </form>
+<a href="{% url 'register' %}">Зарегистрироваться</a>
 {% endblock %}

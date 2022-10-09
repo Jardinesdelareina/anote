@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 class AccountForm(ModelForm):
     class Meta:
         model = AnoteUser
-        fields = ['username', 'phone', 'gender', 'avatar', 'birthday']
+        fields = ['email', 'phone', 'gender', 'avatar', 'birthday']
 
         widgets = {
             'username': forms.TextInput(attrs={
@@ -42,5 +42,4 @@ class AnoteUserRegisterForm(UserCreationForm):
 
 
 class AnoteUserAuthForm(AuthenticationForm):
-    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'input'}))
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'input'}))

@@ -6,12 +6,12 @@ from .models import AnoteUser
 
 @admin.register(AnoteUser)
 class AnoteUserAdmin(UserAdmin):
-    list_display = ('id', 'username', 'email', 'phone', 'gender', 'birthday', 'is_active')
-    list_display_links = ('username', 'email')
+    list_display = ('id', 'email', 'phone', 'gender', 'birthday', 'is_active')
+    list_display_links = ('email',)
     fieldsets = (
         (None, {'fields': ('email', 'password', 'phone')}),
         (_('Personal info'), {'fields': ('gender', 'birthday', 'avatar')}),
         (_('Permissions'), {'fields': ('is_staff', 'is_active')}),
     )
-    search_fields = ('username', 'email')
+    search_fields = ('email',)
     ordering = ('date_joined',)

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Профиль :: {{ block.super }}{% endblock %}
+
+{% block content %}
+<div>
+    {% if request.user.is_authenticated %}
+        <div>Добро пожаловать</div>
+        <div><a href="{% url 'logout' %}">Выход</a></div>
+    {% else %}
+        <div>Вы не авторизованы</div>
+        <div><a href="{% url 'register' %}">Регистрация</a></div>
+        <div><a href="{% url 'login' %}">Авторизация</a></div>
+    {% endif %}
+</div>
+{% endblock %}
