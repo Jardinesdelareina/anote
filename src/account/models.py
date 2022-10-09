@@ -12,6 +12,7 @@ class AnoteUser(AbstractUser):
         ('female', 'Женский')
     )
     username = None
+    display_name = models.CharField('Имя', max_length=50)
     email = models.EmailField('Электронная почта', unique=True)
     phone = models.CharField('Номер телефона', max_length=11)
     gender = models.CharField('Пол', max_length=7, choices=GENDER)

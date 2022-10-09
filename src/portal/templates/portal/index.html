@@ -5,7 +5,7 @@
 {% block content %}
 <div>
     {% if request.user.is_authenticated %}
-        <div>Добро пожаловать</div>
+        <div>Добро пожаловать, {{ user.email }}</div>
         <div><a href="{% url 'logout' %}">Выход</a></div>
     {% else %}
         <div>Вы не авторизованы</div>
