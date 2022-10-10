@@ -10,7 +10,16 @@
 </head>
 <body>
     <div class="wrapper">
-        {% block content %}{% endblock %}
+        <header>
+            {% include 'include/_header.html' %}
+        </header>
+        <main>
+            <content>
+                {% include 'include/_messages.html' %}
+
+                {% block content %}{% endblock %}
+            </content>
+        </main>
     </div>
 </body>
 </html>

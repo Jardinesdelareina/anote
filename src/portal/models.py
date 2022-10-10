@@ -1,3 +1,78 @@
 from django.db import models
+from django.urls import reverse
+from django.conf import settings
+from mptt.fields import TreeForeignKey
+from mptt.models import MPTTModel
 
-# Create your models here.
+
+class Category(models.Model):
+    # Модель категории статьи
+    title = models.CharField('Название', max_length=50, db_index=True)
+
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'category_id': self.pk})
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+        ordering = ['title']
+
+
+class Article(models.Model):
+    # Модель статьи
+    title = models.CharField('Название', max_length=500)
+    created_at = models.DateTimeField('Дата публикации', auto_now_add=True)
+    text = models.TextField('Текст', max_length=5000)
+    is_published = models.BooleanField('Опубликовано', default=True)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='articles')
+
+    def get_absolute_url(self):
+        return reverse('article', kwargs={'pk': self.pk})
+
+    def __str__(self):
+        return self.title
+
+    def comments_count(self):
+        return self.comments.count()
+
+    class Meta:
+        verbose_name = 'Статья'
+        verbose_name_plural = 'Статьи'
+        ordering = ['-created_at']
+
+
+class AbstractComment(models.Model):
+    # Абстрактная модель комментария
+    text = models.TextField('Комментарий', max_length=500)
+    created_at = models.DateTimeField('Дата комментария', auto_now_add=True)
+    updated_at = models.DateTimeField('Дата изменения комментария', auto_now=True)
+
+    def __str__(self):
+        return f'{self.text}'
+
+    class Meta:
+        abstract = True
+
+
+class Comment(AbstractComment, MPTTModel):
+    # Модель комментария к статье
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, related_name='comments', on_delete=models.CASCADE)
+    parent = TreeForeignKey(
+        'self',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='children'
+    )
+
+    def __str__(self):
+        return '{} - {}'.format(self.user, self.article)
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
