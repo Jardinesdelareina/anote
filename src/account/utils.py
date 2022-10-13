@@ -6,6 +6,6 @@ def get_path_upload_avatar(instance, file):
 
 def validate_size_avatar(file_obj):
     # Валидация размера загружаемого аватара
-    size_limit = 1
+    size_limit = 2
     if file_obj.size > size_limit * 1024 * 1024:
         return ValidationError(f'Максимальный размер загружаемого файла {size_limit}Mb')

@@ -27,7 +27,7 @@ class Article(models.Model):
     created_at = models.DateTimeField('Дата публикации', auto_now_add=True)
     text = models.TextField('Текст', max_length=5000)
     is_published = models.BooleanField('Опубликовано', default=True)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='categories')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='articles')
 
     def get_absolute_url(self):

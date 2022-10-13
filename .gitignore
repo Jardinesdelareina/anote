@@ -12,6 +12,9 @@ db.sqlite3
 venv
 .env
 
+prod_settings.py
+local_settings.py
+
 __pycache__/
 */__pycache__/
 *.py[cod]

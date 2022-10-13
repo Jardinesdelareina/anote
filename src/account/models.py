@@ -7,12 +7,17 @@ from .managers import AnoteUserManager
 
 class AnoteUser(AbstractUser):
     # Кастомная модель пользователя
+
     GENDER = (
         ('male', 'Мужской'), 
         ('female', 'Женский')
     )
+
     username = None
-    display_name = models.CharField('Имя', max_length=50)
+    first_name = None
+    last_name = None
+
+    display_name = models.CharField('Имя', max_length=50, unique=True)
     email = models.EmailField('Электронная почта', unique=True)
     phone = models.CharField('Номер телефона', max_length=11)
     gender = models.CharField('Пол', max_length=7, choices=GENDER)
