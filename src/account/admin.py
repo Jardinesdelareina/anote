@@ -9,9 +9,12 @@ class AnoteUserAdmin(UserAdmin):
     list_display = ('id', 'email', 'display_name', 'phone', 'gender', 'birthday', 'is_active')
     list_display_links = ('email', 'display_name')
     fieldsets = (
-        (None, {'fields': ('email', 'password', 'phone')}),
+        (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('display_name', 'gender', 'birthday', 'avatar')}),
         (_('Permissions'), {'fields': ('is_staff', 'is_active')}),
     )
+    add_fieldsets = (
+            (None, {'fields': ('email', 'password')}),
+        )
     search_fields = ('email', 'display_name')
     ordering = ('-date_joined',)

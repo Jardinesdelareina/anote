@@ -28,7 +28,7 @@ class AnoteUser(AbstractUser):
         null=True,
         validators=[FileExtensionValidator(allowed_extensions=['jpg']), validate_size_avatar]
     )
-    birthday = models.DateField('День рождения', blank=True, null=True)
+    birthday = models.DateField('Дата рождения', blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

@@ -1,6 +1,5 @@
-from xml.etree.ElementTree import Comment
 from rest_framework import serializers
-from .models import Category, Article
+from .models import Category, Article, Comment
 
 
 class CommentCreateSerializer(serializers.ModelSerializer):
