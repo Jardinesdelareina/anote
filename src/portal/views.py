@@ -34,6 +34,7 @@ class ArticleViewSet(ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     permission_classes_by_action = {
         'get': [permissions.AllowAny],
+        'post': [permissions.IsAuthenticated],
         'update': [IsAuthor],
         'destroy': [IsAuthor],
     }
@@ -50,6 +51,14 @@ class ArticleListViewSet(ModelViewSet):
 
 
 class CategoryViewSet(ModelViewSet):
-    # Вывод категории статей
+    # Вывод списка категорий статей
     serializer_class = CategoryArticleSerializer
     queryset = Category.objects.all()
+
+
+class CategoryArticlesViewSet(ModelViewSet):
+    # Вывод определенной категории статей
+    serializer_class = ArticleListSerializer
+    
+    def get_queryset(self):
+        return Article.objects.filter(category_id=self.kwargs['category_id'], is_published=True).select_related('category') 
