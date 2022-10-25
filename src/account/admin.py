@@ -1,20 +1,17 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
-from .models import AnoteUser
+from .models import CustomUser
 
 
-@admin.register(AnoteUser)
-class AnoteUserAdmin(UserAdmin):
+@admin.register(CustomUser)
+class CustomUserAdmin(UserAdmin):
     list_display = ('id', 'email', 'username', 'phone', 'gender', 'birthday', 'is_active')
     list_display_links = ('email', 'username')
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        (_('Personal info'), {'fields': ('username', 'gender', 'birthday', 'avatar')}),
+        (None, {'fields': ('email', 'username', 'password')}),
+        (_('Personal info'), {'fields': ('gender', 'about', 'phone', 'birthday', 'avatar')}),
         (_('Permissions'), {'fields': ('is_staff', 'is_active')}),
     )
-    add_fieldsets = (
-            (None, {'fields': ('email', 'password')}),
-        )
     search_fields = ('email', 'username')
     ordering = ('-date_joined',)

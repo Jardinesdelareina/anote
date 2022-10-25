@@ -74,6 +74,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+""" 
 DATABASES = {
     'default': {
         'ENGINE': env('POSTGRES_ENGINE'),
@@ -83,7 +84,16 @@ DATABASES = {
         'HOST': env('POSTGRES_HOST'),
         'PORT': env('POSTGRES_PORT'),
     }
+} 
+"""
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
 
 
 # Password validation
@@ -131,7 +141,7 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AUTH_USER_MODEL = 'account.AnoteUser'
+AUTH_USER_MODEL = 'account.CustomUser'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

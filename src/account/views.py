@@ -1,22 +1,22 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import permissions
-from .serializers import AnoteUserSerializer, AnoteUserPublicSerializer
-from .models import AnoteUser
+from .serializers import CustomUserSerializer, CustomUserPublicSerializer
+from .models import CustomUser
 
 
-class AnoteUserViewSet(ModelViewSet):
+class CustomUserViewSet(ModelViewSet):
     # Вывод профиля пользователя
-    serializer_class = AnoteUserSerializer
+    serializer_class = CustomUserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return AnoteUser.objects.filter(id=self.request.user.id)
+        return CustomUser.objects.filter(id=self.request.user.id)
 
 
-class AnoteUserPublicViewSet(ModelViewSet):
+class CustomUserPublicViewSet(ModelViewSet):
     # Вывод публичного профиля пользователя
-    serializer_class = AnoteUserPublicSerializer
+    serializer_class = CustomUserPublicSerializer
     permission_classes = [permissions.AllowAny]
     
     def get_queryset(self):
-        return AnoteUser.objects.all()
+        return CustomUser.objects.all()

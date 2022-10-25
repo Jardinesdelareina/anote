@@ -16,7 +16,7 @@ class CommentCreateSerializer(serializers.ModelSerializer):
 class CommentListSerializer(serializers.ModelSerializer):
     # Список комментариев
     text = serializers.SerializerMethodField()
-    user = serializers.ReadOnlyField(source='user.display_name')
+    user = serializers.ReadOnlyField(source='user.username')
     
     def get_text(self, obj):
         if obj.deleted:
@@ -25,7 +25,7 @@ class CommentListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        exclude = ('updated_at',)
+        fields = '__all__'
 
 
 class CategoryArticleSerializer(serializers.ModelSerializer):
@@ -38,7 +38,7 @@ class CategoryArticleSerializer(serializers.ModelSerializer):
 class ArticleSerializer(serializers.ModelSerializer):
     # Статья
     category = CategoryArticleSerializer()
-    user = serializers.ReadOnlyField(source='user.display_name')
+    user = serializers.ReadOnlyField(source='user.username')
     comments = CommentListSerializer(many=True, read_only=True)
     class Meta:
         model = Article
@@ -47,7 +47,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 class ArticleListSerializer(serializers.ModelSerializer):
     # Список статей
-    user = serializers.ReadOnlyField(source='user.display_name')
+    user = serializers.ReadOnlyField(source='user.username')
     class Meta:
         model = Article
         fields = '__all__'
