@@ -9,7 +9,7 @@ class AnoteUserSerializer(serializers.ModelSerializer):
         model = AnoteUser
         fields = (
             'id',
-            'display_name',
+            'username',
             'avatar',
             'email',
             'phone',
@@ -27,7 +27,7 @@ class AnoteUserPublicSerializer(serializers.ModelSerializer):
         model = AnoteUser
         fields = (
             'id',
-            'display_name',
+            'username',
             'avatar',
             'gender',
             'last_login',
