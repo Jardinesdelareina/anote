@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import permissions
-from .._base.permissions import IsOwner
+from .permissions import IsOwner
 from .serializers import (
     CommentCreateSerializer, 
     CategoryArticleSerializer, 
