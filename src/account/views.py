@@ -2,12 +2,13 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework import permissions
 from .serializers import CustomUserSerializer, CustomUserPublicSerializer
 from .models import CustomUser
+from .._base.permissions import IsOwner
 
 
 class CustomUserViewSet(ModelViewSet):
     # Вывод профиля пользователя
     serializer_class = CustomUserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsOwner]
 
     def get_queryset(self):
         return CustomUser.objects.filter(id=self.request.user.id)

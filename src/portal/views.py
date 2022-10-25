@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import permissions
-from .permissions import IsAuthor
+from .._base.permissions import IsOwner
 from .serializers import (
     CommentCreateSerializer, 
     CategoryArticleSerializer, 
@@ -15,8 +15,8 @@ class CommentViewSet(ModelViewSet):
     serializer_class = CommentCreateSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     permission_classes_by_action = {
-        'update': [IsAuthor],
-        'destroy': [IsAuthor],
+        'update': [IsOwner],
+        'destroy': [IsOwner],
     }
     queryset = Comment.objects.all()
 
@@ -35,10 +35,13 @@ class ArticleViewSet(ModelViewSet):
     permission_classes_by_action = {
         'get': [permissions.AllowAny],
         'post': [permissions.IsAuthenticated],
-        'update': [IsAuthor],
-        'destroy': [IsAuthor],
+        'update': [IsOwner],
+        'destroy': [IsOwner],
     }
-    queryset = Article.objects.all().select_related('categories').prefetch_related('comments')
+    queryset = Article.objects\
+        .all()\
+        .select_related('categories')\
+        .prefetch_related('comments')
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -47,7 +50,9 @@ class ArticleViewSet(ModelViewSet):
 class ArticleListViewSet(ModelViewSet):
     # Вывод списка статей
     serializer_class = ArticleListSerializer
-    queryset = Article.objects.all().select_related('category')
+    queryset = Article.objects\
+        .all()\
+        .select_related('category')
 
 
 class CategoryViewSet(ModelViewSet):
@@ -61,4 +66,6 @@ class CategoryArticlesViewSet(ModelViewSet):
     serializer_class = ArticleListSerializer
     
     def get_queryset(self):
-        return Article.objects.filter(category_id=self.kwargs['category_id'], is_published=True).select_related('category') 
+        return Article.objects\
+            .filter(category_id=self.kwargs['category_id'], is_published=True)\
+            .select_related('category') 

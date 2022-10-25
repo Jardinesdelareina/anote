@@ -2,31 +2,23 @@ from django.contrib.auth.base_user import BaseUserManager
 
 
 class CustomUserManager(BaseUserManager):
-    # Диспетчер кастомной модели пользователя
+# Диспетчер кастомной модели пользователя
 
-    def _create_user(self, username, email, password=None, **extra_fields):
-        if not username:
-            raise ValueError('Пользователь должен иметь имя')
-        if not email:
-            raise ValueError('Пользователь должен иметь email')
-        email = self.normalize_email(email)
-        user = self.model(username=username, email=email, **extra_fields)
+    def create_user(self, username, email, password=None):
+        if username is None:
+            raise TypeError('Пользователь должен иметь имя.')
+        if email is None:
+            raise TypeError('Пользователь должен иметь email.')
+        user = self.model(username=username, email=self.normalize_email(email))
         user.set_password(password)
-        user.save(using=self._db)
+        user.save()
         return user
 
-    def create_user(self, username, email, password=None, **extra_fields):
-        # Создание пользователя с email, username и паролем
-        extra_fields.setdefault('is_staff', False)
-        extra_fields.setdefault('is_superuser', False)
-        return self._create_user(username, email, password, **extra_fields)
-
-    def create_superuser(self, username, email, password, **extra_fields):
-        # Создание администратора
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Суперпользователь должен иметь is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Суперпользователь должен иметь is_superuser=True.')
-        return self._create_user(username, email, password, **extra_fields)
+    def create_superuser(self, username, email, password):
+        if password is None:
+            raise TypeError('Администратор должен иметь пароль.')
+        user = self.create_user(username, email, password)
+        user.is_superuser = True
+        user.is_staff = True
+        user.save()
+        return user

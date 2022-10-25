@@ -2,8 +2,8 @@ from rest_framework import permissions
 from rest_framework.permissions import BasePermission
 
 
-class IsAuthor(BasePermission):
-    # Автор статьи или комментария
+class IsOwner(BasePermission):
+    # Аутентифицированный пользователь, автор статьи или комментария
     def has_permission(self, request):
         if request.method in permissions.SAFE_METHODS:
             return True
