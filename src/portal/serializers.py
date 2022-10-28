@@ -50,6 +50,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 class ArticleListSerializer(serializers.ModelSerializer):
     # Список статей
     user = serializers.ReadOnlyField(source='user.username')
+    comments_count = serializers.CharField(read_only=True)
     class Meta:
         model = Article
         fields = '__all__'
