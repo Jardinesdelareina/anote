@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from .._base.serializers import FilterCommentListSerializer, RecursiveSerializer
 from .models import Category, Article, Comment
 
 
@@ -19,11 +20,12 @@ class CommentListSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
     
     def get_text(self, obj):
-        if obj.deleted:
+        if obj.is_deleted:
             return None
         return obj.text
 
     class Meta:
+        list_serializer_class = FilterCommentListSerializer
         model = Comment
         fields = '__all__'
 
@@ -37,7 +39,7 @@ class CategoryArticleSerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     # Статья
-    category = CategoryArticleSerializer()
+    category = CategoryArticleSerializer(read_only=True)
     user = serializers.ReadOnlyField(source='user.username')
     comments = CommentListSerializer(many=True, read_only=True)
     class Meta:

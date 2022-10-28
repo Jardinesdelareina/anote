@@ -16,7 +16,7 @@ urlpatterns = [
         'delete': 'destroy',
     })),
     path('article/create', ArticleViewSet.as_view({'post': 'create'})),
-    path('article', ArticleListViewSet.as_view({'get': 'list'})),
-    path('comment/<int:pk>', CommentViewSet.as_view({'post': 'create'})),
-    path('comment', CommentViewSet.as_view({'put': 'update', 'delete': 'deatroy'}))
+    path('article/all', ArticleListViewSet.as_view({'get': 'list'})),
+    path('comment/create', CommentViewSet.as_view({'post': 'create'})),
+    path('comment/<int:pk>', CommentViewSet.as_view({'put': 'update', 'delete': 'destroy'}))
 ]

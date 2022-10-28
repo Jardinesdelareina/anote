@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import FileExtensionValidator
-from .utils import get_path_upload_avatar, validate_size_avatar
+from .._base.utils import get_path_upload_avatar, validate_size_avatar
 from .managers import CustomUserManager
 
 
@@ -33,7 +33,7 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.email
+        return self.username
 
     class Meta:
         verbose_name = 'Пользователь'
