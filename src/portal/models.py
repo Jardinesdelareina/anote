@@ -7,7 +7,7 @@ from mptt.models import MPTTModel
 
 class Category(models.Model):
     # Модель категории статьи
-    title = models.CharField('Название', max_length=50, db_index=True)
+    title = models.CharField('Название', max_length=50)
 
     def get_absolute_url(self):
         return reverse('category', kwargs={'category_id': self.pk})

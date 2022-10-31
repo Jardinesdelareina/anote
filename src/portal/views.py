@@ -3,7 +3,7 @@ from rest_framework import permissions
 from .._base.permissions import IsOwner
 from .serializers import (
     CommentCreateSerializer, 
-    CategoryArticleSerializer, 
+    CategorySerializer, 
     ArticleSerializer, 
     ArticleListSerializer
 )
@@ -57,12 +57,12 @@ class ArticleListViewSet(ModelViewSet):
 
 class CategoryViewSet(ModelViewSet):
     # Вывод списка категорий статей
-    serializer_class = CategoryArticleSerializer
+    serializer_class = CategorySerializer
     queryset = Category.objects.all()
 
 
 class CategoryArticlesViewSet(ModelViewSet):
-    # Вывод определенной категории статей
+    # Вывод статей определенной категории
     serializer_class = ArticleListSerializer
     
     def get_queryset(self):

@@ -30,7 +30,7 @@ class CommentListSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CategoryArticleSerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     # Категории статей
     class Meta:
         model = Category
@@ -39,7 +39,6 @@ class CategoryArticleSerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     # Статья
-    category = CategoryArticleSerializer(read_only=True)
     user = serializers.ReadOnlyField(source='user.username')
     comments = CommentListSerializer(many=True, read_only=True)
     class Meta:
