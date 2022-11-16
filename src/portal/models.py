@@ -3,6 +3,8 @@ from django.urls import reverse
 from django.conf import settings
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
+from django.core.validators import FileExtensionValidator
+from ..utils.tools import get_path_upload_article_image, validate_size_image
 
 
 class Category(models.Model):
@@ -26,6 +28,13 @@ class Article(models.Model):
     title = models.CharField('Название', max_length=500)
     created_at = models.DateTimeField('Дата публикации', auto_now_add=True)
     text = models.TextField('Текст', max_length=5000)
+    image = models.ImageField(
+        'Изображение',
+        upload_to=get_path_upload_article_image,
+        blank=True, 
+        null=True,
+        validators=[FileExtensionValidator(allowed_extensions=['jpg']), validate_size_image]
+    )
     is_published = models.BooleanField('Опубликовано', default=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='categories')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='articles')

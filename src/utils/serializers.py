@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+
 class RecursiveSerializer(serializers.Serializer):
     # Вывод рекурсивно
     def to_representation(self, value):

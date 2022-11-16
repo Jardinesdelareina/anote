@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .._base.serializers import FilterCommentListSerializer, RecursiveSerializer
+from ..utils.serializers import FilterCommentListSerializer, RecursiveSerializer
 from .models import Category, Article, Comment
 
 
@@ -39,17 +39,34 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     # Статья
+    category = CategorySerializer()
     user = serializers.ReadOnlyField(source='user.username')
     comments = CommentListSerializer(many=True, read_only=True)
     class Meta:
         model = Article
-        fields = '__all__'
+        fields = (
+            'title',
+            'created_at',
+            'text',
+            'image',
+            'category',
+            'user',
+            'comments',
+            'comments_count',
+        )
 
 
 class ArticleListSerializer(serializers.ModelSerializer):
-    # Список статей
+    # Статья
+    category = CategorySerializer()
     user = serializers.ReadOnlyField(source='user.username')
-    comments_count = serializers.CharField(read_only=True)
     class Meta:
         model = Article
-        fields = '__all__'
+        fields = (
+            'title',
+            'created_at',
+            'image',
+            'category',
+            'user',
+            'comments_count',
+        )

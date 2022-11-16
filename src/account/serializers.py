@@ -13,7 +13,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
             'avatar',
             'email',
             'phone',
-            'gender',
             'about',
             'birthday',
             'last_login',
@@ -29,9 +28,7 @@ class CustomUserPublicSerializer(serializers.ModelSerializer):
             'id',
             'username',
             'avatar',
-            'gender',
             'about',
-            'birthday',
             'last_login',
             'date_joined',
         )
