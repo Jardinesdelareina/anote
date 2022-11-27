@@ -6,11 +6,11 @@ from .models import CustomUser
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
-    list_display = ('id', 'email', 'username', 'phone', 'is_active')
+    list_display = ('id', 'email', 'username', 'is_active')
     list_display_links = ('email', 'username')
     fieldsets = (
         (None, {'fields': ('email', 'username')}),
-        (_('Personal info'), {'fields': ('about', 'phone', 'birthday', 'avatar')}),
+        (_('Personal info'), {'fields': ('about', 'avatar')}),
         (_('Permissions'), {'fields': ('is_staff', 'is_active')}),
     )
     search_fields = ('email', 'username')

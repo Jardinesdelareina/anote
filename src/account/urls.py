@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import CustomUserViewSet, CustomUserPublicViewSet
+from .views import CustomUserView, CustomUserPublicView
 
 urlpatterns = [
-    path('<int:pk>', CustomUserPublicViewSet.as_view({'get': 'retrieve'})),
-    path('account/<int:pk>', CustomUserViewSet.as_view({'get': 'retrieve', 'put': 'update'})),
+    path('pu/<int:pk>', CustomUserPublicView.as_view({'get': 'retrieve'})),
+    path('u/<int:pk>', CustomUserView.as_view({'get': 'retrieve', 'put': 'update'})),
 ]
