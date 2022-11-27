@@ -1,5 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework import permissions, filters
+from rest_framework import permissions, filters, parsers
 from rest_framework.generics import ListAPIView
 from ..utils.permissions import IsOwner
 from .serializers import (
@@ -11,8 +11,9 @@ from .serializers import (
 from .models import Category, Article, Comment
 
 
-class CommentViewSet(ModelViewSet):
+class CommentView(ModelViewSet):
     # Вывод комментария к статье
+    parser_classes = (parsers.MultiPartParser,)
     serializer_class = CommentCreateSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     permission_classes_by_action = {
@@ -30,8 +31,9 @@ class CommentViewSet(ModelViewSet):
         instance.save()
 
 
-class ArticleViewSet(ModelViewSet):
+class ArticleView(ModelViewSet):
     # Вывод статьи
+    parser_classes = (parsers.MultiPartParser,)
     serializer_class = ArticleSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     permission_classes_by_action = {
@@ -48,7 +50,7 @@ class ArticleViewSet(ModelViewSet):
         serializer.save(user=self.request.user)
 
 
-class ArticleListViewSet(ModelViewSet):
+class ArticleListView(ModelViewSet):
     # Вывод списка статей
     serializer_class = ArticleSerializer
     queryset = Article.objects\
@@ -56,13 +58,13 @@ class ArticleListViewSet(ModelViewSet):
         .select_related('category')
 
 
-class CategoryViewSet(ModelViewSet):
+class CategoryView(ModelViewSet):
     # Вывод списка категорий статей
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
 
 
-class CategoryArticlesViewSet(ModelViewSet):
+class CategoryArticlesView(ModelViewSet):
     # Вывод статей определенной категории
     serializer_class = ArticleListSerializer
     

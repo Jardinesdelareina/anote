@@ -13,10 +13,10 @@ class CustomUser(AbstractUser):
     avatar = models.ImageField(
         'Аватар', 
         upload_to=get_path_upload_avatar,
-        blank=True, 
-        null=True,
         validators=[FileExtensionValidator(allowed_extensions=['jpg']), validate_size_image],
         default=settings.DEFAULT_AVATAR,
+        blank=True, 
+        null=True,
     )
     about = models.TextField('О себе', max_length=1000, blank=True, null=True)
 

@@ -14,9 +14,10 @@ class CommentCreateSerializer(serializers.ModelSerializer):
         )
 
 
-class CommentListSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
     # Список комментариев
     text = serializers.SerializerMethodField()
+    children_comment = RecursiveSerializer(many=True)
     user = serializers.ReadOnlyField(source='user.username')
     
     def get_text(self, obj):
@@ -27,7 +28,14 @@ class CommentListSerializer(serializers.ModelSerializer):
     class Meta:
         list_serializer_class = FilterCommentListSerializer
         model = Comment
-        fields = '__all__'
+        fields = (
+            'id',
+            'article',
+            'user',
+            'text',
+            'created_at',
+            'children_comment',
+        )
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -39,12 +47,12 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     # Статья
-    category = CategorySerializer()
     user = serializers.ReadOnlyField(source='user.username')
-    comments = CommentListSerializer(many=True, read_only=True)
+    comments = CommentSerializer(many=True, read_only=True)
     class Meta:
         model = Article
         fields = (
+            'id',
             'title',
             'created_at',
             'text',
@@ -52,7 +60,6 @@ class ArticleSerializer(serializers.ModelSerializer):
             'category',
             'user',
             'comments',
-            'comments_count',
         )
 
 
@@ -63,6 +70,7 @@ class ArticleListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = (
+            'id',
             'title',
             'created_at',
             'image',

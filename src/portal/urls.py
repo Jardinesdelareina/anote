@@ -1,26 +1,26 @@
 from django.urls import path
 from .views import (
-    CommentViewSet,
-    ArticleViewSet, 
-    ArticleListViewSet,
+    CommentView,
+    ArticleView, 
+    ArticleListView,
     SearchArticleList,
-    CategoryViewSet,
-    CategoryArticlesViewSet
+    CategoryView,
+    CategoryArticlesView,
 ) 
 
 urlpatterns = [
-    path('category/all', CategoryViewSet.as_view({'get': 'list'})),
-    path('category/<int:category_id>', CategoryArticlesViewSet.as_view({'get': 'list'})),
+    path('category/all', CategoryView.as_view({'get': 'list'})),
+    path('category/<int:category_id>', CategoryArticlesView.as_view({'get': 'list'})),
 
-    path('article/<int:pk>', ArticleViewSet.as_view({
+    path('article/<int:pk>', ArticleView.as_view({
         'get': 'retrieve',
         'put': 'update',
         'delete': 'destroy',
     })),
-    path('article/create', ArticleViewSet.as_view({'post': 'create'})),
-    path('article/all', ArticleListViewSet.as_view({'get': 'list'})),
+    path('article/create', ArticleView.as_view({'post': 'create'})),
+    path('article/all', ArticleListView.as_view({'get': 'list'})),
     path('search', SearchArticleList.as_view()),
 
-    path('comment/create', CommentViewSet.as_view({'post': 'create'})),
-    path('comment/<int:pk>', CommentViewSet.as_view({'put': 'update', 'delete': 'destroy'}))
+    path('comment/create', CommentView.as_view({'post': 'create'})),
+    path('comment/<int:pk>', CommentView.as_view({'put': 'update', 'delete': 'destroy'}))
 ]
