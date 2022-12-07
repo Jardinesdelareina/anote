@@ -7,7 +7,8 @@ WORKDIR /usr/src/app
 
 RUN pip install --upgrade pip
 
-COPY ./req.txt /usr/src/req.txt
-RUN pip install -r /usr/src/req.txt
+COPY ./req.txt .
 
-COPY . /usr/src/app
+RUN pip install -r req.txt
+
+COPY . .
